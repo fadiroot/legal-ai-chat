@@ -178,29 +178,6 @@ python batch_process_documents.py ./documents
 
 ---
 
-## 📊 API Endpoints
-
-### Document Management
-- `POST /documents/upload` - Upload single PDF
-- `POST /documents/upload-multiple` - Upload multiple PDFs
-- `POST /documents/process-local` - Process local file
-- `GET /documents/list` - List indexed documents
-- `GET /documents/statistics` - Get document stats
-- `POST /documents/create-index` - Create search index
-- `DELETE /documents/delete-index` - Delete index
-
-### Q&A
-- `POST /ask` - Ask questions (RAG v2)
-- `GET /ask/health` - Health check
-
-### General
-- `GET /` - Root endpoint
-- `GET /health` - Health check
-- `GET /docs` - Swagger UI
-- `GET /redoc` - ReDoc docs
-
----
-
 ## 🔐 Configuration
 
 ### Required Environment Variables

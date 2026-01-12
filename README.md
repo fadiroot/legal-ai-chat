@@ -1,9 +1,8 @@
 # Legal AI Chat System
 
-**Version:** 2.0.0 (Enhanced with RAG v2)  
-**Status:** ✅ **PRODUCTION READY**
+**Version:** 2.0.0 (Enhanced with RAG v2)
 
-A production-ready FastAPI-based Legal AI Chat system that ingests PDF documents, processes them into searchable chunks, and provides intelligent Q&A functionality using Azure services with **RAG v2** (Retrieval-Augmented Generation).
+A FastAPI-based Legal AI Chat system that ingests PDF documents, processes them into searchable chunks, and provides intelligent Q&A functionality using Azure services with **RAG v2** (Retrieval-Augmented Generation).
 
 ---
 

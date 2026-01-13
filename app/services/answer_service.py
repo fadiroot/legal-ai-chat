@@ -1,6 +1,4 @@
-"""
-Answer generation service using Azure OpenAI GPT models.
-"""
+"""Answer generation service using Azure OpenAI GPT models."""
 import os
 from typing import List, Dict, Optional
 from openai import AzureOpenAI
@@ -40,15 +38,7 @@ class AnswerService:
         return self._client
     
     def _build_context_from_chunks(self, chunks: List[Dict]) -> str:
-        """
-        Build context string from retrieved chunks.
-        
-        Args:
-            chunks: List of chunk dictionaries with content, document_name, page_number, etc.
-            
-        Returns:
-            Formatted context string
-        """
+        """Build context string from retrieved chunks."""
         context_parts = []
         for i, chunk in enumerate(chunks, 1):
             doc_name = chunk.get("document_name", "Unknown")
@@ -61,23 +51,8 @@ class AnswerService:
         
         return "\n".join(context_parts)
     
-    def generate_answer(
-        self,
-        question: str,
-        chunks: List[Dict],
-        language: Optional[str] = None
-    ) -> str:
-        """
-        Generate a natural language answer from retrieved chunks.
-        
-        Args:
-            question: User's question
-            chunks: List of retrieved chunks with content and metadata
-            language: Optional language hint ('ar' for Arabic, 'en' for English)
-            
-        Returns:
-            Generated answer string
-        """
+    def generate_answer(self, question: str, chunks: List[Dict], language: Optional[str] = None) -> str:
+        """Generate a natural language answer from retrieved chunks."""
         if not chunks:
             return "المعلومة غير موجودة في الوثائق." if language == "ar" else "No relevant information found in the documents."
         
@@ -87,8 +62,6 @@ class AnswerService:
         if language is None:
             has_arabic = any('\u0600' <= char <= '\u06FF' for char in question)
             language = "ar" if has_arabic else "en"
-        
-        # System prompt
         system_prompt = """أنت مساعد قانوني ذكي. مهمتك هي الإجابة على الأسئلة بناءً على السياق المقدم فقط.
 
 القواعد المهمة:

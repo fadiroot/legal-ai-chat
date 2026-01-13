@@ -17,11 +17,18 @@ if [ ! -d "venv" ]; then
     pip install --upgrade pip --quiet
     echo "Installing dependencies..."
     pip install -r requirements.txt
+    echo "Installing agent-framework (pre-release)..."
+    pip install agent-framework --pre || echo "Warning: Failed to install agent-framework. Install manually with: pip install agent-framework --pre"
 else
     source venv/bin/activate
     if ! python -c "import fastapi" 2>/dev/null; then
         echo "Installing dependencies..."
         pip install -r requirements.txt
+    fi
+    # Check if agent-framework is installed
+    if ! python -c "import agent_framework" 2>/dev/null; then
+        echo "Installing agent-framework (pre-release)..."
+        pip install agent-framework --pre || echo "Warning: Failed to install agent-framework. Install manually with: pip install agent-framework --pre"
     fi
 fi
 

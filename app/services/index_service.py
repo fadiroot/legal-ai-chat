@@ -1,6 +1,4 @@
-"""
-Service for creating and managing Azure Cognitive Search indexes.
-"""
+"""Service for creating and managing Azure Cognitive Search indexes."""
 import os
 from typing import Optional
 from azure.search.documents.indexes import SearchIndexClient
@@ -39,15 +37,7 @@ class IndexService:
         )
     
     def create_index(self, vector_dimension: int = 3072) -> bool:
-        """
-        Create the search index with the proper schema for vector search.
-        
-        Args:
-            vector_dimension: Dimension of the embedding vectors (default: 3072 for text-embedding-3-large)
-            
-        Returns:
-            True if successful
-        """
+        """Create the search index with the proper schema for vector search."""
         try:
             try:
                 existing_index = self.index_client.get_index(self.index_name)

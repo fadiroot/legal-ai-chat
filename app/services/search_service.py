@@ -1,6 +1,4 @@
-"""
-Vector search service using Azure Cognitive Search.
-"""
+"""Vector search service using Azure Cognitive Search."""
 from typing import List, Dict, Optional
 from azure.search.documents import SearchClient
 from azure.search.documents.models import VectorizedQuery
@@ -11,26 +9,12 @@ class SearchService:
     """Service for vector search operations using Azure Cognitive Search."""
     
     def __init__(self, search_client: SearchClient):
-        """
-        Initialize search service.
-        
-        Args:
-            search_client: Azure Cognitive Search client
-        """
+        """Initialize search service."""
         self.client = search_client
         self.index_name = self.client._index_name
     
     def index_chunk(self, chunk: Chunk, embedding: List[float]) -> bool:
-        """
-        Index a single chunk with its embedding into Azure Cognitive Search.
-        
-        Args:
-            chunk: Chunk object to index
-            embedding: Embedding vector for the chunk
-            
-        Returns:
-            True if successful
-        """
+        """Index a single chunk with its embedding into Azure Cognitive Search."""
         try:
             document = {
                 "id": chunk.id,
@@ -48,16 +32,7 @@ class SearchService:
             raise Exception(f"Error indexing chunk: {str(e)}")
     
     def index_chunks_batch(self, chunks: List[Chunk], embeddings: List[List[float]]) -> bool:
-        """
-        Index multiple chunks with their embeddings in batch.
-        
-        Args:
-            chunks: List of Chunk objects
-            embeddings: List of embedding vectors (must match chunks order)
-            
-        Returns:
-            True if successful
-        """
+        """Index multiple chunks with their embeddings in batch."""
         if len(chunks) != len(embeddings):
             raise ValueError("Number of chunks must match number of embeddings")
         
@@ -113,28 +88,8 @@ class SearchService:
             else:
                 raise Exception(f"Error indexing chunks batch: {error_msg}")
     
-    def search_similar_chunks(
-        self, 
-        query_embedding: List[float], 
-        top_k: int = 5,
-        filter_expression: Optional[str] = None
-    ) -> List[Dict]:
-        """
-        Search for similar chunks using vector similarity.
-        
-        Args:
-            query_embedding: Embedding vector of the query
-            top_k: Number of top results to return
-            filter_expression: Optional OData filter expression
-            
-        Returns:
-            List of dictionaries containing:
-            - content: Chunk text
-            - document_name: Source document name
-            - page_number: Page number
-            - chunk_index: Chunk index
-            - score: Similarity score
-        """
+    def search_similar_chunks(self, query_embedding: List[float], top_k: int = 5, filter_expression: Optional[str] = None) -> List[Dict]:
+        """Search for similar chunks using vector similarity."""
         try:
             vector_query = VectorizedQuery(
                 vector=query_embedding,
@@ -172,15 +127,7 @@ class SearchService:
             raise Exception(f"Error searching similar chunks: {str(e)}")
     
     def list_all_documents(self, top: int = 100) -> List[Dict]:
-        """
-        List all documents/chunks in the index.
-        
-        Args:
-            top: Maximum number of results to return (default: 100)
-            
-        Returns:
-            List of all indexed chunks
-        """
+        """List all documents/chunks in the index."""
         try:
             results = self.client.search(
                 search_text="*",
@@ -204,15 +151,7 @@ class SearchService:
             raise Exception(f"Error listing documents: {str(e)}")
     
     def get_documents_by_name(self, document_name: str) -> List[Dict]:
-        """
-        Get all chunks for a specific document.
-        
-        Args:
-            document_name: Name of the document to retrieve
-            
-        Returns:
-            List of chunks for the specified document
-        """
+        """Get all chunks for a specific document."""
         try:
             filter_expression = f"document_name eq '{document_name}'"
             results = self.client.search(
@@ -239,12 +178,7 @@ class SearchService:
             raise Exception(f"Error getting documents by name: {str(e)}")
     
     def get_document_statistics(self) -> Dict:
-        """
-        Get statistics about indexed documents.
-        
-        Returns:
-            Dictionary with statistics about the index
-        """
+        """Get statistics about indexed documents."""
         try:
             all_docs = self.list_all_documents(top=10000)
             

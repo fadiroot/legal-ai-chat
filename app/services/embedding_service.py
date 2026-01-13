@@ -1,6 +1,4 @@
-"""
-Embedding service using Azure OpenAI.
-"""
+"""Embedding service using Azure OpenAI."""
 import os
 from typing import List, Optional
 from openai import AzureOpenAI

@@ -1,6 +1,4 @@
-"""
-PDF document ingestion service using Azure Document Intelligence via Azure AI Foundry.
-"""
+"""PDF document ingestion service using Azure Document Intelligence."""
 import os
 import requests
 from typing import List, Dict
@@ -38,33 +36,14 @@ class PDFService:
         }
     
     def extract_text_from_pdf(self, pdf_path: str) -> List[Dict[str, str]]:
-        """
-        Extract text from PDF file with page-level information.
-        
-        Args:
-            pdf_path: Path to the PDF file
-            
-        Returns:
-            List of dictionaries containing:
-            - page_number: Page number (1-indexed)
-            - text: Extracted text from the page
-        """
+        """Extract text from PDF file with page-level information."""
         with open(pdf_path, "rb") as f:
             pdf_bytes = f.read()
         
         return self._extract_with_azure_doc_intel(pdf_bytes)
     
     def extract_text_from_bytes(self, pdf_bytes: bytes, filename: str) -> List[Dict[str, str]]:
-        """
-        Extract text from PDF bytes (for uploaded files).
-        
-        Args:
-            pdf_bytes: PDF file content as bytes
-            filename: Original filename
-            
-        Returns:
-            List of dictionaries with page_number and text
-        """
+        """Extract text from PDF bytes (for uploaded files)."""
         return self._extract_with_azure_doc_intel(pdf_bytes)
     
     def _extract_with_azure_doc_intel(self, pdf_bytes: bytes) -> List[Dict[str, str]]:

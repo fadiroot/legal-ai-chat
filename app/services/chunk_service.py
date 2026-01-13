@@ -1,6 +1,4 @@
-"""
-Text chunking service for splitting documents into 300-500 token pieces.
-"""
+"""Text chunking service for splitting documents into 300-500 token pieces."""
 from typing import List
 from app.models.chunk import Chunk
 
@@ -16,12 +14,7 @@ class ChunkService:
     """Service for chunking text into token-sized pieces."""
     
     def __init__(self, model_name: str = "gpt-4"):
-        """
-        Initialize chunking service with tokenizer.
-        
-        Args:
-            model_name: OpenAI model name for token counting
-        """
+        """Initialize chunking service with tokenizer."""
         self.use_tiktoken = TIKTOKEN_AVAILABLE
         self.encoding = None
         
@@ -64,25 +57,8 @@ class ChunkService:
             return 0
         return max(1, len(text) // 4)
     
-    def chunk_text(
-        self, 
-        text: str, 
-        document_name: str, 
-        page_number: int,
-        chunk_index_offset: int = 0
-    ) -> List[Chunk]:
-        """
-        Split text into chunks of 300-500 tokens.
-        
-        Args:
-            text: Text to chunk
-            document_name: Name of the source document
-            page_number: Page number in the document
-            chunk_index_offset: Starting index for chunk numbering
-            
-        Returns:
-            List of Chunk objects
-        """
+    def chunk_text(self, text: str, document_name: str, page_number: int, chunk_index_offset: int = 0) -> List[Chunk]:
+        """Split text into chunks of 300-500 tokens."""
         if not text.strip():
             return []
         
@@ -180,21 +156,8 @@ class ChunkService:
         
         return chunks
     
-    def chunk_pages(
-        self, 
-        pages: List[dict], 
-        document_name: str
-    ) -> List[Chunk]:
-        """
-        Chunk multiple pages of text.
-        
-        Args:
-            pages: List of page dictionaries with 'page_number' and 'text'
-            document_name: Name of the source document
-            
-        Returns:
-            List of all chunks from all pages
-        """
+    def chunk_pages(self, pages: List[dict], document_name: str) -> List[Chunk]:
+        """Chunk multiple pages of text."""
         all_chunks = []
         chunk_index = 0
         
